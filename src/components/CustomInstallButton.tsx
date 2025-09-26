@@ -74,12 +74,12 @@ export default function CustomInstallButton({
 
       // Pass the captured beforeinstallprompt event if available
       if ((window as any).promptEvent) {
-        pwaElement.externalPromptEvent = (window as any).promptEvent
+        (pwaElement as any).externalPromptEvent = (window as any).promptEvent
         setIsInstallable(true)
       }
 
       // Check if install is available
-      if (pwaElement.isInstallAvailable) {
+      if ((pwaElement as any).isInstallAvailable) {
         setIsInstallable(true)
       }
     })
@@ -99,10 +99,10 @@ export default function CustomInstallButton({
 
     try {
       // Show the install dialog
-      if (pwaInstallRef.current.showDialog) {
-        pwaInstallRef.current.showDialog()
-      } else if (pwaInstallRef.current.install) {
-        await pwaInstallRef.current.install()
+      if ((pwaInstallRef.current as any).showDialog) {
+        (pwaInstallRef.current as any).showDialog()
+      } else if ((pwaInstallRef.current as any).install) {
+        await (pwaInstallRef.current as any).install()
       }
     } catch (error) {
       console.error('Install error:', error)

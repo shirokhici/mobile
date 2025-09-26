@@ -50,7 +50,7 @@ export default function PWAInstall({
 
       // Pass the captured beforeinstallprompt event if available
       if ((window as any).promptEvent) {
-        pwaElement.externalPromptEvent = (window as any).promptEvent
+        (pwaElement as any).externalPromptEvent = (window as any).promptEvent
       }
     }
 
