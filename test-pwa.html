@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Store - Test Preview</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="./public/manifest.json">
+    <meta name="theme-color" content="#4285f4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="PWA Store">
+    <link rel="apple-touch-icon" href="./public/apple-touch-icon.png">
+    <link rel="icon" href="./public/icon-192x192.png">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'google-blue': '#4285f4',
+                        'google-green': '#34a853',
+                        'google-yellow': '#fbbc04',
+                        'google-red': '#ea4335'
+                    },
+                    fontFamily: {
+                        'roboto': ['Roboto', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'google': '0 2px 10px 0 rgba(0,0,0,0.2)',
+                        'google-hover': '0 4px 20px 0 rgba(0,0,0,0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .pwa-install {
+            display: none;
+        }
+        
+        .install-available .pwa-install {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-google-blue rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-medium text-gray-900">PWA Store</span>
+                    </div>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-8">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            placeholder="Cari aplikasi & game"
+                            class="w-full px-4 py-2 pl-10 pr-4 text-gray-700 bg-gray-100 border border-transparent rounded-full focus:outline-none focus:bg-white focus:border-google-blue"
+                        >
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-google-blue font-medium">Game</a>
+                    <a href="#" class="text-gray-700 hover:text-google-blue font-medium">Aplikasi</a>
+                    <a href="#" class="text-gray-700 hover:text-google-blue font-medium">Film</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- PWA Install Banner -->
+    <div id="install-banner" class="bg-google-blue text-white py-3 px-4 hidden">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>Install PWA Store untuk pengalaman yang lebih baik</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="install-button" class="bg-white text-google-blue px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                    Install
+                </button>
+                <button id="dismiss-banner" class="text-white hover:text-gray-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- App Card -->
+        <div class="bg-white rounded-lg shadow-google p-6">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- App Icon & Basic Info -->
+                <div class="flex items-start space-x-4">
+                    <div class="w-24 h-24 bg-gradient-to-br from-google-blue to-google-green rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <span class="text-white font-bold text-2xl">PWA</span>
+                    </div>
+                    <div class="flex-1">
+                        <h1 class="text-2xl font-bold text-gray-900 mb-1">PWA Store Demo</h1>
+                        <p class="text-google-blue font-medium mb-2">Trae AI Developer</p>
+                        <div class="flex items-center space-x-4 text-sm text-gray-600 mb-4">
+                            <div class="flex items-center space-x-1">
+                                <span class="text-yellow-400">★★★★★</span>
+                                <span>4.8</span>
+                            </div>
+                            <span>1M+ downloads</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded">Gratis</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Install Section -->
+                <div class="lg:w-80">
+                    <div class="space-y-4">
+                        <button id="main-install-button" class="w-full bg-google-green hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-google hover:shadow-google-hover">
+                            <div class="flex items-center justify-center space-x-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                <span>Install</span>
+                            </div>
+                        </button>
+                        <div class="flex space-x-3">
+                            <button class="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 transition-colors">
+                                Wishlist
+                            </button>
+                            <button class="p-2 text-gray-500 hover:text-gray-700 border border-gray-300 rounded-lg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- App Description -->
+            <div class="mt-8">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Tentang aplikasi ini</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    PWA Store adalah aplikasi Progressive Web App yang meniru pengalaman Google Play Store. 
+                    Aplikasi ini mendemonstrasikan fitur-fitur PWA modern termasuk instalasi offline, 
+                    service worker, dan custom install prompt menggunakan library @khmyznikov/pwa-install.
+                </p>
+                
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-medium text-gray-900 mb-2">🚀 Progressive Web App</h3>
+                        <p class="text-sm text-gray-600">Pengalaman aplikasi native di browser</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-medium text-gray-900 mb-2">📱 Responsive Design</h3>
+                        <p class="text-sm text-gray-600">Optimized untuk semua perangkat</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-medium text-gray-900 mb-2">⚡ Offline Support</h3>
+                        <p class="text-sm text-gray-600">Bekerja tanpa koneksi internet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PWA Features Demo -->
+        <div class="mt-8 bg-white rounded-lg shadow-google p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">PWA Features Test</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-medium text-gray-900 mb-2">Service Worker Status</h3>
+                    <div id="sw-status" class="text-sm text-gray-600 bg-gray-50 p-3 rounded">
+                        Checking service worker...
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-900 mb-2">Install Status</h3>
+                    <div id="install-status" class="text-sm text-gray-600 bg-gray-50 p-3 rounded">
+                        Checking install status...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <h3 class="font-medium text-gray-900 mb-2">Test Actions</h3>
+                <div class="flex flex-wrap gap-3">
+                    <button id="test-notification" class="bg-google-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        Test Notification
+                    </button>
+                    <button id="test-offline" class="bg-google-yellow text-gray-900 px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors">
+                        Test Offline Mode
+                    </button>
+                    <button id="clear-cache" class="bg-google-red text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                        Clear Cache
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let deferredPrompt;
+        let isInstalled = false;
+
+        // Check if app is already installed
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            isInstalled = true;
+            document.getElementById('install-status').textContent = 'App is installed (standalone mode)';
+        }
+
+        // Capture beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            if (!isInstalled) {
+                document.getElementById('install-banner').classList.remove('hidden');
+                document.getElementById('install-status').textContent = 'Install prompt available';
+            }
+        });
+
+        // Install button handlers
+        function handleInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                        document.getElementById('install-banner').classList.add('hidden');
+                        document.getElementById('install-status').textContent = 'App installed successfully';
+                    } else {
+                        console.log('User dismissed the install prompt');
+                        document.getElementById('install-status').textContent = 'Install prompt dismissed';
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert('Install prompt not available. Try opening this page in Chrome or Edge.');
+            }
+        }
+
+        document.getElementById('install-button').addEventListener('click', handleInstall);
+        document.getElementById('main-install-button').addEventListener('click', handleInstall);
+
+        document.getElementById('dismiss-banner').addEventListener('click', () => {
+            document.getElementById('install-banner').classList.add('hidden');
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./public/sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                    document.getElementById('sw-status').textContent = 'Service Worker registered successfully';
+                })
+                .catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                    document.getElementById('sw-status').textContent = 'Service Worker registration failed';
+                });
+        } else {
+            document.getElementById('sw-status').textContent = 'Service Worker not supported';
+        }
+
+        // Test buttons
+        document.getElementById('test-notification').addEventListener('click', () => {
+            if ('Notification' in window) {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === 'granted') {
+                        new Notification('PWA Store Test', {
+                            body: 'Notification test berhasil!',
+                            icon: './public/icon-192x192.png'
+                        });
+                    }
+                });
+            }
+        });
+
+        document.getElementById('test-offline').addEventListener('click', () => {
+            if (navigator.onLine) {
+                alert('Untuk test offline mode, matikan koneksi internet dan refresh halaman.');
+            } else {
+                alert('Anda sedang offline! PWA masih berfungsi berkat service worker.');
+            }
+        });
+
+        document.getElementById('clear-cache').addEventListener('click', () => {
+            if ('caches' in window) {
+                caches.keys().then((cacheNames) => {
+                    return Promise.all(
+                        cacheNames.map((cacheName) => {
+                            return caches.delete(cacheName);
+                        })
+                    );
+                }).then(() => {
+                    alert('Cache cleared successfully!');
+                    location.reload();
+                });
+            }
+        });
+
+        // Show install banner after 3 seconds if not installed
+        setTimeout(() => {
+            if (!isInstalled && deferredPrompt) {
+                document.getElementById('install-banner').classList.remove('hidden');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

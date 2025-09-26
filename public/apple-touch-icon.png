@@ -1,0 +1,7 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="20" fill="#1a73e8"/>
+  <path d="M90 45C106.569 45 120 58.431 120 75V105C120 121.569 106.569 135 90 135C73.431 135 60 121.569 60 105V75C60 58.431 73.431 45 90 45Z" fill="white"/>
+  <circle cx="90" cy="75" r="15" fill="#1a73e8"/>
+  <rect x="75" y="90" width="30" height="30" rx="3" fill="#1a73e8"/>
+  <text x="90" y="157" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">PWA</text>
+</svg>

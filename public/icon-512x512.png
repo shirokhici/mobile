@@ -1,0 +1,7 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="64" fill="#1a73e8"/>
+  <path d="M256 128C303.128 128 341.333 166.205 341.333 213.333V298.667C341.333 345.795 303.128 384 256 384C208.872 384 170.667 345.795 170.667 298.667V213.333C170.667 166.205 208.872 128 256 128Z" fill="white"/>
+  <circle cx="256" cy="213.333" r="42.667" fill="#1a73e8"/>
+  <rect x="213.333" y="256" width="85.333" height="85.333" rx="10.667" fill="#1a73e8"/>
+  <text x="256" y="448" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="36" font-weight="bold">PWA STORE</text>
+</svg>
