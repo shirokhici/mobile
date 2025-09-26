@@ -6,20 +6,10 @@ import AppCard from '@/components/AppCard'
 import CustomInstallButton from '@/components/CustomInstallButton'
 
 export default function Home() {
-  const [isInstallAvailable, setIsInstallAvailable] = useState(false)
   const [showInstallBanner, setShowInstallBanner] = useState(false)
 
   useEffect(() => {
-    // Check if PWA is installable
-    const checkInstallability = () => {
-      if ('serviceWorker' in navigator) {
-        setIsInstallAvailable(true)
-      }
-    }
-
-    checkInstallability()
-
-    // Show install banner after 3 seconds if not installed
+    // Show install banner after 3 seconds if PWA is not installed
     const timer = setTimeout(() => {
       if (!window.matchMedia('(display-mode: standalone)').matches) {
         setShowInstallBanner(true)
@@ -55,7 +45,7 @@ export default function Home() {
       <Header />
       
       {/* Install Banner */}
-      {showInstallBanner && isInstallAvailable && (
+      {showInstallBanner && (
         <div className="bg-google-blue text-white p-4">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center space-x-3">

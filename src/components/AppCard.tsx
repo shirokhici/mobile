@@ -136,13 +136,7 @@ export default function AppCard({
         </div>
       </div>
 
-      {/* PWA Install Component */}
-      {showInstallDialog && (
-        <PWAInstall
-          onInstallSuccess={handleInstallSuccess}
-          onInstallFail={() => setShowInstallDialog(false)}
-        />
-      )}
+
     </div>
   )
 }
